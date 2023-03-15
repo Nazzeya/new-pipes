@@ -1,0 +1,104 @@
+<div class="container">
+
+    <!-- LEFT SIDE -->
+
+    <svg width="350px" height="500px">
+        <g *ngFor="let figure of leftFigures" [ngSwitch]="figure.type">
+            <rect *ngSwitchCase="'rect'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
+                [attr.width]="figure.width" [attr.height]="figure.height" [attr.fill]="figure.fill"
+                [attr.stroke]="figure.stroke" />
+    
+            <circle *ngSwitchCase="'circle'" [attr.cx]="figure.coordinates?.x" [attr.cy]="figure.coordinates?.y"
+                [attr.r]="figure.r" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+    
+            <ellipse *ngSwitchCase="'ellipse'" [attr.cx]="figure.coordinates?.x" [attr.cy]="figure.coordinates?.y"
+                [attr.rx]="figure.rx" [attr.ry]="figure.ry" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+    
+            <text *ngSwitchCase="'text'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
+                [attr.fill]="figure.fill">{{figure.text}}</text>
+    
+            <polygon *ngSwitchCase="'polygon'" [attr.points]="figure.points" [attr.stroke]="figure.stroke"
+                [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+    
+            <polyline *ngSwitchCase="'polyline'" [attr.points]="figure.points" [attr.stroke]="figure.stroke"
+                [attr.fill]="figure.fill" />
+        </g>
+    </svg>
+
+    <!-- CENTER -->
+    
+    <svg width="600px" height="500px">
+        <g *ngFor="let figure of centerFigures" [ngSwitch]="figure.type">
+            <g *ngSwitchCase="'vertical-pipe'" >
+                    <rect [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" [attr.width]="figure.thickness"
+                        [attr.height]="figure.length" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+                    
+                    <rect [attr.x]="xRectV(figure.coordinates?.x)" [attr.y]="figure.coordinates?.y"
+                        [attr.width]="widthRectV(figure.thickness)" [attr.height]="heightRectV(figure.length)" [attr.fill]="figure.fill"
+                        [attr.stroke]="figure.stroke" />
+                    
+                    <rect [attr.x]="xRectV(figure.coordinates?.x)" [attr.y]="yRectV(figure.coordinates?.y, figure.length)"
+                        [attr.width]="widthRectV(figure.thickness)" [attr.height]="heightRectV(figure.length)" [attr.fill]="figure.fill"
+                        [attr.stroke]="figure.stroke" />
+            </g>
+
+            <g *ngSwitchCase="'gorizontal-pipe'">
+                <rect [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" [attr.width]="figure.length"
+                    [attr.height]="figure.thickness" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+            
+                <rect [attr.x]="figure.coordinates?.x" [attr.y]="yRectG(figure.coordinates?.y)"
+                    [attr.width]="widthRectG(figure.thickness)" [attr.height]="heightRectG(figure.thickness)" [attr.fill]="figure.fill"
+                    [attr.stroke]="figure.stroke" /> 
+            
+                <rect [attr.x]="xRectG(figure.coordinates?.x, figure.length)" [attr.y]="yRectG(figure.coordinates?.y)"
+                    [attr.width]="widthRectG(figure.length)" [attr.height]="heightRectG(figure.thickness)" [attr.fill]="figure.fill"
+                    [attr.stroke]="figure.stroke" />
+            </g>
+
+            <rect *ngSwitchCase="'vertical-pipe1'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" 
+                [attr.width]="figure.thickness" [attr.height]="figure.length" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+            
+            <rect *ngSwitchCase="'gorizontal-pipe1'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" [attr.width]="figure.length"
+                [attr.height]="figure.thickness" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+
+
+            <text *ngSwitchCase="'text'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
+                [attr.fill]="figure.fill">{{figure.text}}</text>
+
+
+            <rect *ngSwitchCase="'rect'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
+                [attr.width]="figure.width" [attr.height]="figure.height" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+
+            <circle *ngSwitchCase="'circle'" [attr.cx]="figure.coordinates?.x" [attr.cy]="figure.coordinates?.y" [attr.r]="figure.r"
+                [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+            </g>
+
+
+    </svg>
+
+
+    <!-- RIGHT SIDE -->
+
+    <svg width="350px" height="500px">
+        <g *ngFor="let figure of rightFigures" [ngSwitch]="figure.type">
+            <rect *ngSwitchCase="'rect'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
+                [attr.width]="figure.width" [attr.height]="figure.height" [attr.fill]="figure.fill"
+                [attr.stroke]="figure.stroke" />
+    
+            <circle *ngSwitchCase="'circle'" [attr.cx]="figure.coordinates?.x" [attr.cy]="figure.coordinates?.y"
+                [attr.r]="figure.r" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+    
+            <ellipse *ngSwitchCase="'ellipse'" [attr.cx]="figure.coordinates?.x" [attr.cy]="figure.coordinates?.y"
+                [attr.rx]="figure.rx" [attr.ry]="figure.ry" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+    
+            <text *ngSwitchCase="'text'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
+                [attr.fill]="figure.fill">{{toString(figure.id)}}</text>
+    
+            <polygon *ngSwitchCase="'polygon'" [attr.points]="figure.points" [attr.stroke]="figure.stroke"
+                [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+    
+            <polyline *ngSwitchCase="'polyline'" [attr.points]="figure.points" [attr.stroke]="figure.stroke"
+                [attr.fill]="figure.fill" />
+        </g>
+    </svg>
+</div>
