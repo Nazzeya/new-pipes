@@ -18,6 +18,8 @@ export class PictureComponent {
   rightFigures: IFigure[] = rightSide;
   centerFigures: IFigure[] = center;
 
+  // For pipes
+
   widthRectV(width: any){
     width+=10;
     return width;
@@ -56,9 +58,50 @@ export class PictureComponent {
     return coordY
   }
 
+  //For corners
+
+  cornerSize(thickness: any){
+    return thickness+10;
+  }
+
+  //For IDs of rects
+
   toString(id: any){
     id = String(id);
     return id;
+  }
+
+  //For text of rects
+
+  idX(x: any){
+    return x+30;
+  }
+
+  textX(x: any){
+    return x+20;
+
+  }
+
+  idY(y: any, height: any){
+    return y+height/2.5;
+  }
+
+  textY(y: any, height: any){
+    return y+height/1.2;
+  }
+
+  //for text of rect-new-2
+
+  volumeTextX(x: any){
+    return x+5;
+  }
+
+  volumeTextY(y: any, height: any){
+    return y+height/1.5;
+  }
+
+  rect2TextX(x: any, width: any){
+    return x+(width/2)+10;
   }
 
 }

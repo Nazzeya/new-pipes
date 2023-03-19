@@ -2,9 +2,9 @@
 
     <!-- LEFT SIDE -->
 
-    <svg width="350px" height="500px">
+    <svg width="350px" height="650px">
         <g *ngFor="let figure of leftFigures" [ngSwitch]="figure.type">
-            <rect *ngSwitchCase="'rect'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
+            <!-- <rect *ngSwitchCase="'rect'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
                 [attr.width]="figure.width" [attr.height]="figure.height" [attr.fill]="figure.fill"
                 [attr.stroke]="figure.stroke" />
     
@@ -21,14 +21,26 @@
                 [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
     
             <polyline *ngSwitchCase="'polyline'" [attr.points]="figure.points" [attr.stroke]="figure.stroke"
-                [attr.fill]="figure.fill" />
+                [attr.fill]="figure.fill" /> -->
+
+            <g *ngSwitchCase="'rect-new'">
+                <rect [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
+                    [attr.width]="figure.width" [attr.height]="figure.height" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+                <text [attr.x]="idX(figure.coordinates?.x)" [attr.y]="idY(figure.coordinates?.y, figure.height)"
+                    [attr.fill]="figure.fillId">R{{toString(figure.id)}}</text>
+                <text [attr.x]="textX(figure.coordinates?.x)" [attr.y]="textY(figure.coordinates?.y, figure.height)"
+                    [attr.fill]="figure.fillText">{{figure.text}}</text>
+            </g>
         </g>
     </svg>
 
     <!-- CENTER -->
     
-    <svg width="600px" height="500px">
+    <svg width="650px" height="650px">
         <g *ngFor="let figure of centerFigures" [ngSwitch]="figure.type">
+
+            <!-- main pipes -->
+
             <g *ngSwitchCase="'vertical-pipe'" >
                     <rect [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" [attr.width]="figure.thickness"
                         [attr.height]="figure.length" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
@@ -55,11 +67,88 @@
                     [attr.stroke]="figure.stroke" />
             </g>
 
-            <rect *ngSwitchCase="'vertical-pipe1'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" 
-                [attr.width]="figure.thickness" [attr.height]="figure.length" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+            <!-- Ordinary pipes -->
             
-            <rect *ngSwitchCase="'gorizontal-pipe1'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" [attr.width]="figure.length"
-                [attr.height]="figure.thickness" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+            <rect *ngSwitchCase="'vertical-pipe1'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
+                [attr.width]="figure.thickness" [attr.height]="figure.length" [attr.fill]="figure.fill"
+                [attr.stroke]="figure.stroke" />
+            
+            
+            <rect *ngSwitchCase="'gorizontal-pipe1'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
+                [attr.width]="figure.length" [attr.height]="figure.thickness" [attr.fill]="figure.fill"
+                [attr.stroke]="figure.stroke" />
+
+            <!-- Corners -->
+
+            <!-- top-left corner -->
+            <g *ngSwitchCase="'tl-corner'">
+                <symbol id="tl-corner" viewBox="0 0 100 100">
+                    <polygon points="100,0 80,0 0,80 0,100 70,100 100,70" />
+                </symbol>
+                <use href="#tl-corner" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" [attr.width]="cornerSize(figure.thickness)" 
+                [attr.height]="cornerSize(figure.thickness)" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" [attr.stroke-width]="figure.strokeWidth"/>
+            </g>
+
+            <!-- top-right corner -->
+            <g *ngSwitchCase="'tr-corner'">
+                <symbol id="tr-corner" viewBox="0 0 100 100">
+                    <polygon points="0,0 20,0 100,80 100,100 30,100 0,70" />
+                </symbol>
+                <use href="#tr-corner" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" [attr.width]="cornerSize(figure.thickness)"
+                    [attr.height]="cornerSize(figure.thickness)" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke"
+                    [attr.stroke-width]="figure.strokeWidth" />
+            </g>
+
+            <!-- lower-left corner -->
+            <g *ngSwitchCase="'ll-corner'">
+                <symbol id="ll-corner" viewBox="0 0 100 100">
+                    <polygon points="0,0 70,0 100,30 100,100 80,100 0,20" />
+                </symbol>
+                <use href="#ll-corner" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" [attr.width]="cornerSize(figure.thickness)"
+                    [attr.height]="cornerSize(figure.thickness)" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke"
+                    [attr.stroke-width]="figure.strokeWidth" />
+            </g>
+
+            <!-- lower-right corner -->
+            <g *ngSwitchCase="'lr-corner'">
+                <symbol id="lr-corner" viewBox="0 0 100 100">
+                    <polygon points="100,0 30,0 0,30 0,100 20,100 100,20" />
+                </symbol>
+                <use href="#lr-corner" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" [attr.width]="cornerSize(figure.thickness)"
+                    [attr.height]="cornerSize(figure.thickness)" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke"
+                    [attr.stroke-width]="figure.strokeWidth" />
+            </g>
+
+            <!-- Rects with info -->
+
+            <g *ngSwitchCase="'rect-new-2'">
+                <rect [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" [attr.width]="figure.width"
+                    [attr.height]="figure.height" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+                <text [attr.x]="rect2TextX(figure.coordinates?.x, figure.width)" [attr.y]="volumeTextY(figure.coordinates?.y, figure.height)"
+                    [attr.fill]="figure.fillId">{{figure.text}}</text>
+                <text [attr.x]="volumeTextX(figure.coordinates?.x)" [attr.y]="volumeTextY(figure.coordinates?.y, figure.height)"
+                    [attr.fill]="figure.fillText">{{figure.textVolume}}</text>
+            </g>
+
+            <g *ngSwitchCase="'rect-new-3'">
+                <rect [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" [attr.width]="figure.width"
+                    [attr.height]="figure.height" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+                <!-- <text [attr.x]="idX(figure.coordinates?.x)" [attr.y]="idY(figure.coordinates?.y, figure.height)"
+                                [attr.fill]="figure.fillId">R{{toString(figure.id)}}</text>
+                            <text [attr.x]="textX(figure.coordinates?.x)" [attr.y]="textY(figure.coordinates?.y, figure.height)"
+                                [attr.fill]="figure.fillText">{{figure.text}}</text> -->
+            </g>
+
+
+            <!-- Circles -->
+
+            <g *ngSwitchCase="'circle-new'">
+                <symbol id="circle-new" viewBox="0 0 100 120">
+                    <polygon points="0,0 0,20 20,20 20,100 100,100 100,0 0,0" [attr.fill]="figure.fill"/>
+                    <circle cx="60" cy="60" r="30" [attr.fill]="figure.fill" stroke="black" stroke-width="30" />
+                </symbol>
+                <use href="#circle-new" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" width="30" height="30"/>
+            </g>
 
 
             <text *ngSwitchCase="'text'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
@@ -79,9 +168,19 @@
 
     <!-- RIGHT SIDE -->
 
-    <svg width="350px" height="500px">
+    <svg width="350px" height="650px">
         <g *ngFor="let figure of rightFigures" [ngSwitch]="figure.type">
-            <rect *ngSwitchCase="'rect'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
+
+            <g *ngSwitchCase="'rect-new'">
+                <rect [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y" [attr.width]="figure.width"
+                    [attr.height]="figure.height" [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
+                <text [attr.x]="idX(figure.coordinates?.x)" [attr.y]="idY(figure.coordinates?.y, figure.height)"
+                    [attr.fill]="figure.fillId">{{toString(figure.id)}}</text>
+                <text [attr.x]="textX(figure.coordinates?.x)" [attr.y]="textY(figure.coordinates?.y, figure.height)"
+                    [attr.fill]="figure.fillText">{{figure.text}}</text>
+            </g>
+
+            <!-- <rect *ngSwitchCase="'rect'" [attr.x]="figure.coordinates?.x" [attr.y]="figure.coordinates?.y"
                 [attr.width]="figure.width" [attr.height]="figure.height" [attr.fill]="figure.fill"
                 [attr.stroke]="figure.stroke" />
     
@@ -98,7 +197,7 @@
                 [attr.fill]="figure.fill" [attr.stroke]="figure.stroke" />
     
             <polyline *ngSwitchCase="'polyline'" [attr.points]="figure.points" [attr.stroke]="figure.stroke"
-                [attr.fill]="figure.fill" />
+                [attr.fill]="figure.fill" /> -->
         </g>
     </svg>
 </div>
